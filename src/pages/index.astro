@@ -1,0 +1,63 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import HeaderLink from '../components/HeaderLink.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+
+// Use Astro.glob() to fetch all posts, and then sort them by date.
+const posts = (await Astro.glob('./posts/*.{md,mdx}')).sort(
+	(a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf()
+).slice(0, 4);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body class="min-h-screen bg-white text-slate-900 dark:bg-slate-800 dark:text-slate-100">
+		<header class="mx-auto py-16 max-w-2xl px-6 lg:px-8 text-xs">
+			<h1 class="text-4xl font-bold leading-tight tracking-tight">
+				{SITE_TITLE}
+			</h1>
+			<p class="text-slate-600 dark:text-slate-400 text-sm">by Morishitter</p>
+		</header>
+		<main class="mx-auto max-w-2xl px-6 lg:px-8 pb-12">
+			<section>
+				<h2 class="text-2xl font-bold flex items-center -ml-12 before:content=[''] before:w-8 before:h-px before:bg-current before:mr-4">このサイトについて</h2>
+				<p class="mt-4">
+					Moristapaper は <a href="https://github.com/morishitter" class="underline underline-offset-2 hover:decoration-0">Morishitter</a> が日々の考えや活動の記録を蓄積するウェブサイトです。
+				</p>
+				<p>更新情報は <a href="rss.xml" class="underline underline-offset-2 hover:decoration-0">RSS</a> で購読できます。</p>
+			</section>
+			<section>
+				<h2 class="text-2xl font-bold flex items-center -ml-12 mt-20 before:content=[''] before:w-8 before:h-px before:bg-current before:mr-4">最近の記事</h2>
+				<ul>
+					{posts.map((post) => (
+						<li class="mt-12">
+							<article itemscope itemtype="http://schema.org/Article">
+								<header>
+									<h3 class="text-lg font-bold">
+										<a href={post.url} itemprop="url" class="hover:underline underline-offset-2">
+											{post.frontmatter.title}
+										</a>
+									</h3>
+									<time class="text-xs text-slate-600 dark:text-slate-400" datetime={post.frontmatter.pubDate}>
+										{new Date(post.frontmatter.pubDate).toLocaleDateString('ja-JP', {
+											year: 'numeric',
+											month: 'short',
+											day: 'numeric',
+										})}
+									</time>
+									<p class="mt-2">{post.frontmatter.description}</p>
+								</header>
+							</article>
+						</li>
+					))}
+				</ul>
+				<a href="/posts" class="flex justify-center items-center text-sm px-4 py-3 md:w-40 bg-slate-800 dark:bg-slate-100 text-slate-50 dark:text-slate-900 hover:bg-slate-700 hover:dark:bg-slate-200 mt-12">記事一覧</a>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

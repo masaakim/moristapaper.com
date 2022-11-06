@@ -1,0 +1,48 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+
+// Use Astro.glob() to fetch all posts, and then sort them by date.
+const posts = (await Astro.glob('./posts/*.{md,mdx}')).sort(
+	(a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf()
+);
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body class="min-h-screen bg-white text-slate-900 dark:bg-slate-800 dark:text-slate-100">
+		<Header />
+		<main class="mx-auto max-w-2xl px-6 lg:px-8 pb-12">
+			<section>
+				<ul>
+					{posts.map((post) => (
+						<li class="mt-12 first:mt-0">
+							<article itemscope itemtype="http://schema.org/Article">
+								<header>
+									<h2 class="text-lg font-bold">
+										<a href={post.url} itemprop="url" class="hover:underline underline-offset-2">
+											{post.frontmatter.title}
+										</a>
+									</h2>
+									<time class="text-xs text-slate-600 dark:text-slate-400" datetime={post.frontmatter.pubDate}>
+										{new Date(post.frontmatter.pubDate).toLocaleDateString('ja-JP', {
+											year: 'numeric',
+											month: 'short',
+											day: 'numeric',
+										})}
+									</time>
+								</header>
+							</article>
+						</li>
+					))}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,14 @@
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	line-height: 1.5;
+	font-size: calc(1rem + .25vw);
+	font-family: system-ui, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}

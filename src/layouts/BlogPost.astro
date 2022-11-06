@@ -1,0 +1,90 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../config';
+
+import '../styles/markdown.css';
+
+export interface Props {
+	content: {
+		title: string;
+		description: string;
+		pubDate?: string;
+		updatedDate?: string;
+		heroImage?: string;
+		lang?: string;
+	};
+}
+
+const {
+	content: { title, description, pubDate, updatedDate, heroImage, lang, },
+} = Astro.props;
+
+const posts = (await Astro.glob('../pages/posts/*.{md,mdx}')).sort(
+	(a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf()
+);
+
+const _title = Astro.props.content.title
+let thisIndex;
+posts.filter((post, index) => {
+	if (post.frontmatter.title === _title) {
+		thisIndex = index
+	}
+})[0]
+const next = (thisIndex !== undefined) ? posts[thisIndex + 1] : null
+const prev = (thisIndex !== undefined) ? posts[thisIndex - 1] : null
+---
+
+<html lang={lang || "ja"}>
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+
+	<body class="min-h-screen bg-white text-slate-900 dark:bg-slate-800 dark:text-slate-100">
+		<header class="mx-auto py-16 max-w-2xl px-6 lg:px-8 text-xs">
+			<a href="/posts" class="text-xl font-bold hover:underline underline-offset-2">
+				{SITE_TITLE}
+			</a>
+			<p class="text-slate-600 dark:text-slate-400 text-sm">by Morishitter</p>
+		</header>
+		<main class="mx-auto max-w-2xl px-6 lg:px-8">
+			<article>
+				{heroImage && <img width={"100%"} src={heroImage} alt="" />}
+				<h1 class="text-3xl font-bold leading-tight tracking-tight mt-12">{title}</h1>
+				<div class="text-slate-600 dark:text-slate-400 text-xs mt-4 mb-12 flex gap-4">
+					{pubDate && (
+						<div>
+							作成日 <time>{pubDate}</time>
+						</div>
+					)}
+					{updatedDate && (
+						<div>
+							更新日 <time>{updatedDate}</time>
+						</div>
+					)}
+				</div>
+				<div class="markdown">
+					<slot />
+				</div>
+			</article>
+			{(prev || next) &&
+				<div class="flex gap-4 justify-between mt-32">
+					{prev && 
+						<div>
+							<div class="text-xs text-left text-slate-600 dark:text-slate-400">前の記事</div>
+							<a href={prev.url} class="block text-sm text-left hover:underline underline-offset-2">{prev.frontmatter.title}</a>
+						</div>
+					}
+					{next && 
+						<div class="ml-auto">
+							<div class="text-xs text-right text-slate-600 dark:text-slate-400">次の記事</div>
+							<a href={next.url} class="block text-sm text-right hover:underline underline-offset-2">{next.frontmatter.title}</a>
+						</div>
+					}
+				</div>
+			}
+			
+		</main>
+		<Footer />
+	</body>
+</html>
