@@ -43,6 +43,13 @@
   color: #475569;
 }
 
+@media (prefers-color-scheme: dark) {
+  .markdown blockquote {
+    border-left: 0.3rem solid #475569;
+    color: #cbd5e1;
+  }
+}
+
 .markdown ul {
   list-style: disc;
   margin-left: 2rem;
