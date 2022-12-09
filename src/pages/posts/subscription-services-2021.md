@@ -8,10 +8,10 @@ description: "利用しているサブスクリプション型サービスの整
 2021年末時点で利用しているサブスクリプション型サービスの整理をする。
 過去のまとめはこちら。
 
-- [利用しているサブスクリプション型サービス2019](/posts/subscription-services-2019/)
 - [利用しているサブスクリプション型サービス2020](/posts/subscription-services-2020)
+- [利用しているサブスクリプション型サービス2019](/posts/subscription-services-2019/)
 
-##### Adobe Creative Cloud
+#### Adobe Creative Cloud
 
 継続。コンプリートプランを利用中。
 月額5680円だが、Amazon でセールをしていたときに2年分まとめて購入し、月額3490円。
@@ -24,11 +24,11 @@ description: "利用しているサブスクリプション型サービスの整
 去年の記事に書くのを忘れていたけど、2020年にクラウドストレージを Dropbox から iCloud に移行した。
 2021年に名称が「iCloud ストレージ」から「iCloud+」に変わったみたい。
 
-##### Amazon Prime
+#### Amazon Prime
 
 継続。年額4900円。
 
-##### Netflix
+#### Netflix
 
 継続。
 スタンダードプランで利用。
@@ -37,11 +37,11 @@ description: "利用しているサブスクリプション型サービスの整
 最近観た中でおもしろかったのは[イカゲーム](https://www.netflix.com/title/81040344)と[アーケイン](https://www.netflix.com/title/81435684)。
 
 
-##### Dribbble
+#### Dribbble
 
 継続。Pro プランに加入しているので月額$5。
 
-##### freee
+#### freee
 
 継続。
 スタンダードプランを利用中。
